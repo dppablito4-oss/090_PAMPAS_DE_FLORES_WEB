@@ -15,18 +15,24 @@ export default function InscriptionModal({ isOpen, onClose }) {
     setErrorMessage('');
     
     try {
-      const { error } = await supabase
-        .from('inscriptions')
-        .insert([
-          { 
-            team_name: data.teamName, 
-            category: data.category, 
-            delegate_name: data.delegateName, 
-            phone: data.phone 
-          }
-        ]);
+      if (!supabase) {
+        // Supabase no configurado - modo demo
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("Modo demo - datos de inscripción:", data);
+      } else {
+        const { error } = await supabase
+          .from('inscriptions')
+          .insert([
+            { 
+              team_name: data.teamName, 
+              category: data.category, 
+              delegate_name: data.delegateName, 
+              phone: data.phone 
+            }
+          ]);
 
-      if (error) throw error;
+        if (error) throw error;
+      }
       
       setIsSuccess(true);
       
