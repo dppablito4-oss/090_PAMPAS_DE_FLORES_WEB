@@ -1,31 +1,47 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { X, CheckCircle } from 'lucide-react';
+import { X, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 
 export default function InscriptionModal({ isOpen, onClose }) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+    setErrorMessage('');
     
-    // Aquí se conectará con Supabase en el futuro
-    // Simular un retraso de red
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    console.log("Datos de inscripción:", data);
-    
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    
-    // Ocultar mensaje de éxito después de unos segundos y cerrar
-    setTimeout(() => {
-      setIsSuccess(false);
-      reset();
-      onClose();
-    }, 3000);
+    try {
+      const { error } = await supabase
+        .from('inscriptions')
+        .insert([
+          { 
+            team_name: data.teamName, 
+            category: data.category, 
+            delegate_name: data.delegateName, 
+            phone: data.phone 
+          }
+        ]);
+
+      if (error) throw error;
+      
+      setIsSuccess(true);
+      
+      // Ocultar mensaje de éxito después de unos segundos y cerrar
+      setTimeout(() => {
+        setIsSuccess(false);
+        reset();
+        onClose();
+      }, 3000);
+    } catch (error) {
+      console.error("Error al guardar la inscripción:", error);
+      setErrorMessage("Ocurrió un error al enviar tu inscripción. Inténtalo nuevamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -71,6 +87,13 @@ export default function InscriptionModal({ isOpen, onClose }) {
                   <h3 className="text-2xl font-bold text-gray-900">Inscribe a tu Equipo</h3>
                   <p className="text-gray-500 mt-2 text-sm">Completa los datos para separar tu cupo en el campeonato.</p>
                 </div>
+
+                {errorMessage && (
+                  <div className="mb-6 p-4 rounded-xl bg-red-50 flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-700">{errorMessage}</p>
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                   <div>
