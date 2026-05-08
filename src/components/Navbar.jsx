@@ -49,7 +49,7 @@ export default function Navbar() {
                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.4)'}
               >{item}</a>
             ))}
-            <a href="#/admin" style={{
+            <a href="?admin" style={{
               display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px',
               color: 'rgba(255,255,255,0.25)', textDecoration: 'none', fontSize: 12,
             }}><Settings size={12} /></a>
@@ -59,7 +59,7 @@ export default function Navbar() {
         {/* Mobile menu button */}
         {isMobile && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <a href="#/admin" style={{ color: 'rgba(255,255,255,0.25)', display: 'flex' }}><Settings size={16} /></a>
+            <a href="?admin" style={{ color: 'rgba(255,255,255,0.25)', display: 'flex' }}><Settings size={16} /></a>
             <button onClick={() => setIsOpen(!isOpen)}
               style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: 4 }}>
               {isOpen ? <X size={20} /> : <Menu size={20} />}

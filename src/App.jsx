@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Details from './components/Details';
@@ -26,14 +25,21 @@ function LandingPage() {
 }
 
 function App() {
-  return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/admin" element={<AdminPanel />} />
-      </Routes>
-    </HashRouter>
-  );
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Check if URL has ?admin parameter
+    const checkAdmin = () => {
+      const params = new URLSearchParams(window.location.search);
+      setIsAdmin(params.has('admin'));
+    };
+    checkAdmin();
+    window.addEventListener('popstate', checkAdmin);
+    return () => window.removeEventListener('popstate', checkAdmin);
+  }, []);
+
+  if (isAdmin) return <AdminPanel />;
+  return <LandingPage />;
 }
 
 export default App;
