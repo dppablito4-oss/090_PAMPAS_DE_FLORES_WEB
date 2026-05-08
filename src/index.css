@@ -1,38 +1,81 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
-  --bg: #06060d;
-  --accent: #00f0ff;
-  --accent2: #7c3aed;
-  --border: rgba(255, 255, 255, 0.06);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.5);
-  --text-muted: rgba(255, 255, 255, 0.3);
-  --card: rgba(255, 255, 255, 0.02);
-  --card-border: rgba(255, 255, 255, 0.04);
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  color: var(--text-primary);
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
   margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #06060d;
+  color: #ffffff;
+  overflow-x: hidden;
 }
 
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+::selection {
+  background: rgba(0, 240, 255, 0.25);
+  color: #fff;
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* Ambient Glow Animations */
+@keyframes ambientFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8vw, 5vh) scale(1.1); }
+  66% { transform: translate(-3vw, -8vh) scale(0.95); }
+}
+
+@keyframes ambientFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-6vw, -5vh) scale(1.15); }
+}
+
+@keyframes ambientFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(4vw, 8vh) scale(1.2); opacity: 1; }
+}
+
+/* Pulse for WhatsApp button */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(37,211,102,0.3); }
+  50% { box-shadow: 0 0 36px rgba(37,211,102,0.5), 0 0 60px rgba(37,211,102,0.15); }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smooth link transitions */
+a { transition: color 0.2s ease, opacity 0.2s ease; }
+
+/* Input focus styles */
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(0, 240, 255, 0.3) !important;
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.08);
+}

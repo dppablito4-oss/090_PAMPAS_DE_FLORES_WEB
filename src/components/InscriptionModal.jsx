@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { X, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { supabase } from '../lib/supabase';
 
 const inputStyle = {
@@ -30,7 +31,10 @@ export default function InscriptionModal({ isOpen, onClose }) {
         if (error) throw error;
       }
       setIsSuccess(true);
-      setTimeout(() => { setIsSuccess(false); reset(); onClose(); }, 3000);
+      // 🎉 Confetti explosion!
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#00f0ff', '#7c3aed', '#facc15', '#22c55e'] });
+      setTimeout(() => confetti({ particleCount: 60, spread: 100, origin: { y: 0.5 } }), 300);
+      setTimeout(() => { setIsSuccess(false); reset(); onClose(); }, 3500);
     } catch (error) {
       setErrorMessage("Error al enviar. Inténtalo nuevamente.");
     } finally {

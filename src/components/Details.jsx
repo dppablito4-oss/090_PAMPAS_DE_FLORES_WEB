@@ -1,8 +1,10 @@
 import { CalendarDays, MapPin, Target } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function Details() {
   const isMobile = useIsMobile();
+  const [ref, isVisible] = useScrollReveal();
 
   const cardStyle = (hoverColor) => ({
     textAlign: 'center', padding: isMobile ? 20 : 24,
@@ -12,7 +14,11 @@ export default function Details() {
   });
 
   return (
-    <section id="detalles" style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '48px 16px' : '80px 24px' }}>
+    <section ref={ref} id="detalles" style={{
+      maxWidth: 1100, margin: '0 auto', padding: isMobile ? '48px 16px' : '80px 24px',
+      opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
+      transition: 'all 0.7s ease-out',
+    }}>
       <div style={{ marginBottom: isMobile ? 24 : 40 }}>
         <h2 style={{ margin: 0, fontSize: isMobile ? '1rem' : '1.2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>📋 Información del Evento</h2>
         <p style={{ margin: '3px 0 0', fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>Todo lo que necesitas saber sobre el campeonato.</p>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Utensils } from 'lucide-react';
 import useIsMobile from '../hooks/useIsMobile';
+import useScrollReveal from '../hooks/useScrollReveal';
 import { getContent } from '../lib/contentService';
 
 export default function Gastronomy() {
   const [content, setContent] = useState(getContent);
   const isMobile = useIsMobile();
+  const [ref, isVisible] = useScrollReveal();
 
   useEffect(() => {
     const handleFocus = () => setContent(getContent());
@@ -14,7 +16,11 @@ export default function Gastronomy() {
   }, []);
 
   return (
-    <section id="gastronomia" style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '0 16px 48px' : '0 24px 80px' }}>
+    <section ref={ref} id="gastronomia" style={{
+      maxWidth: 1100, margin: '0 auto', padding: isMobile ? '0 16px 48px' : '0 24px 80px',
+      opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
+      transition: 'all 0.7s ease-out 0.2s',
+    }}>
       <div style={{ marginBottom: isMobile ? 20 : 32 }}>
         <h2 style={{ margin: 0, fontSize: isMobile ? '1rem' : '1.2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>🍽️ Gastronomía</h2>
         <p style={{ margin: '3px 0 0', fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>Platos típicos preparados con ingredientes locales.</p>
