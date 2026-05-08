@@ -59,18 +59,18 @@ export default function InscriptionModal({ isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm"
+            className="fixed inset-0 transition-opacity bg-black/80 backdrop-blur-sm"
           ></motion.div>
 
           <motion.div 
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative inline-block w-full max-w-md p-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-3xl"
+            className="relative inline-block w-full max-w-md p-8 overflow-hidden text-left align-middle transition-all transform bg-[#111827] border border-white/10 shadow-2xl rounded-3xl"
           >
             <button 
               onClick={onClose}
-              className="absolute top-5 right-5 text-gray-400 hover:text-gray-600 transition"
+              className="absolute top-5 right-5 text-gray-500 hover:text-gray-300 transition"
             >
               <X className="w-6 h-6" />
             </button>
@@ -80,78 +80,78 @@ export default function InscriptionModal({ isOpen, onClose }) {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-20 h-20 bg-green-500/15 rounded-full flex items-center justify-center mx-auto mb-6"
                 >
-                  <CheckCircle className="w-10 h-10 text-green-500" />
+                  <CheckCircle className="w-10 h-10 text-green-400" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">¡Inscripción Exitosa!</h3>
-                <p className="text-gray-500">Hemos registrado a tu equipo. Te contactaremos pronto para confirmar los detalles.</p>
+                <h3 className="text-2xl font-bold text-white mb-2">¡Inscripción Exitosa!</h3>
+                <p className="text-gray-400">Hemos registrado a tu equipo. Te contactaremos pronto para confirmar los detalles.</p>
               </div>
             ) : (
               <>
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900">Inscribe a tu Equipo</h3>
+                  <h3 className="text-2xl font-bold text-white">Inscribe a tu Equipo</h3>
                   <p className="text-gray-500 mt-2 text-sm">Completa los datos para separar tu cupo en el campeonato.</p>
                 </div>
 
                 {errorMessage && (
-                  <div className="mb-6 p-4 rounded-xl bg-red-50 flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-red-700">{errorMessage}</p>
+                  <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-300">{errorMessage}</p>
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Equipo</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-1">Nombre del Equipo</label>
                     <input 
                       {...register("teamName", { required: true })}
                       type="text" 
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition"
                       placeholder="Ej. Los Leones de Pampas"
                     />
-                    {errors.teamName && <span className="text-red-500 text-xs mt-1">Este campo es requerido</span>}
+                    {errors.teamName && <span className="text-red-400 text-xs mt-1">Este campo es requerido</span>}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-1">Categoría</label>
                     <select 
                       {...register("category", { required: true })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition"
                     >
-                      <option value="">Selecciona una categoría...</option>
-                      <option value="varones">Fulbito Varones (S/ 150.00)</option>
-                      <option value="mujeres">Fulbito Mujeres (S/ 80.00)</option>
+                      <option value="" className="bg-[#111827]">Selecciona una categoría...</option>
+                      <option value="varones" className="bg-[#111827]">Fulbito Varones (S/ 150.00)</option>
+                      <option value="mujeres" className="bg-[#111827]">Fulbito Mujeres (S/ 80.00)</option>
                     </select>
-                    {errors.category && <span className="text-red-500 text-xs mt-1">Selecciona una categoría</span>}
+                    {errors.category && <span className="text-red-400 text-xs mt-1">Selecciona una categoría</span>}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Delegado</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-1">Nombre del Delegado</label>
                     <input 
                       {...register("delegateName", { required: true })}
                       type="text" 
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition"
                       placeholder="Nombre completo"
                     />
-                    {errors.delegateName && <span className="text-red-500 text-xs mt-1">Este campo es requerido</span>}
+                    {errors.delegateName && <span className="text-red-400 text-xs mt-1">Este campo es requerido</span>}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono / WhatsApp</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-1">Teléfono / WhatsApp</label>
                     <input 
                       {...register("phone", { required: true, pattern: /^[0-9]+$/ })}
                       type="tel" 
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition"
                       placeholder="Ej. 987654321"
                     />
-                    {errors.phone && <span className="text-red-500 text-xs mt-1">Ingresa un teléfono válido</span>}
+                    {errors.phone && <span className="text-red-400 text-xs mt-1">Ingresa un teléfono válido</span>}
                   </div>
 
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full py-3.5 px-4 bg-primary hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg transition duration-200 mt-4 disabled:opacity-70 flex justify-center items-center"
+                    className="w-full py-3.5 px-4 bg-primary hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-primary/30 transition duration-200 mt-4 disabled:opacity-70 flex justify-center items-center"
                   >
                     {isSubmitting ? (
                       <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -159,7 +159,7 @@ export default function InscriptionModal({ isOpen, onClose }) {
                       "Enviar Inscripción"
                     )}
                   </button>
-                  <p className="text-xs text-center text-gray-400 mt-4">
+                  <p className="text-xs text-center text-gray-600 mt-4">
                     Al enviar, aceptas que los datos sean procesados para la organización del evento.
                   </p>
                 </form>
