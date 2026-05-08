@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
-import portadaImg from '../assets/portada_09.svg';
+import portadaImg from '../assets/portada_01.svg';
 
 export default function Hero({ onOpenInscription }) {
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00' });
@@ -22,21 +22,27 @@ export default function Hero({ onOpenInscription }) {
 
   return (
     <section id="inicio" style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-      {/* Background image */}
+      {/* Background image — visible like Grafiplot */}
       <div style={{
         position: 'absolute', inset: 0,
         backgroundImage: `url(${portadaImg})`,
-        backgroundSize: 'cover', backgroundPosition: 'center',
+        backgroundSize: 'cover', backgroundPosition: 'center right',
+        opacity: 0.45,
       }} />
-      {/* Gradient overlay: left opaque → right semi-transparent */}
+      {/* Gradient overlay: left dark → right shows image */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to right, rgba(6,6,13,0.97) 0%, rgba(6,6,13,0.8) 40%, rgba(6,6,13,0.35) 100%)',
+        background: 'linear-gradient(to right, rgba(6,6,13,0.95) 0%, rgba(6,6,13,0.7) 35%, rgba(6,6,13,0.15) 70%, rgba(6,6,13,0.05) 100%)',
       }} />
-      {/* Bottom fade */}
+      {/* Top subtle vignette */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to top, #06060d 0%, transparent 40%)',
+        background: 'linear-gradient(to bottom, rgba(6,6,13,0.6) 0%, transparent 30%)',
+      }} />
+      {/* Bottom fade into next section */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, #06060d 0%, transparent 25%)',
       }} />
 
       <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '80px 24px 48px', width: '100%' }} className="fade-in">
