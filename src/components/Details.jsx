@@ -1,42 +1,45 @@
 import { CalendarDays, MapPin, Target } from 'lucide-react';
 
+const cardStyle = {
+  textAlign: 'center', padding: 24,
+  background: 'rgba(255,255,255,0.02)', borderRadius: 16,
+  border: '1px solid rgba(255,255,255,0.06)',
+  transition: 'border-color 0.3s, box-shadow 0.3s',
+};
+
 export default function Details() {
   return (
-    <section id="detalles" className="py-20 bg-[#0a0f1a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h3 className="text-3xl font-bold text-white">Información Oficial</h3>
-          <p className="mt-4 text-gray-500">Todo lo que necesitas saber sobre el encuentro deportivo.</p>
+    <section id="detalles" style={{ maxWidth: 1100, margin: '0 auto', padding: '80px 24px' }}>
+      <div style={{ marginBottom: 40 }}>
+        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>📋 Información del Evento</h2>
+        <p style={{ margin: '3px 0 0', fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>Todo lo que necesitas saber sobre el campeonato.</p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+        <div style={cardStyle}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(0,240,255,0.2)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(0,240,255,0.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = 'none'; }}>
+          <CalendarDays size={28} color="#00f0ff" style={{ margin: '0 auto 12px' }} />
+          <h4 style={{ fontSize: 16, fontWeight: 800, margin: '0 0 4px' }}>Fecha y Hora</h4>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 4px' }}>Domingo, 17 de Mayo de 2026</p>
+          <p style={{ fontSize: 15, fontWeight: 700, color: '#00f0ff', margin: 0 }}>9:00 AM</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div className="bg-white/5 rounded-3xl p-8 border border-white/10 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
-            <div className="w-14 h-14 bg-blue-500/15 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
-              <CalendarDays className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3">Fecha y Hora</h4>
-            <p className="text-gray-500 mb-2">Domingo, 17 de Mayo de 2026</p>
-            <p className="text-gray-200 font-semibold text-lg">9:00 AM</p>
-          </div>
+        <div style={cardStyle}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,58,237,0.3)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(124,58,237,0.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = 'none'; }}>
+          <MapPin size={28} color="#a78bfa" style={{ margin: '0 auto 12px' }} />
+          <h4 style={{ fontSize: 16, fontWeight: 800, margin: '0 0 4px' }}>Ubicación</h4>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 4px' }}>Centro Poblado Pampas de Flores</p>
+          <p style={{ fontSize: 15, fontWeight: 700, margin: 0 }}>Grass Sintético del C.P.</p>
+        </div>
 
-          <div className="bg-white/5 rounded-3xl p-8 border border-white/10 hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300">
-            <div className="w-14 h-14 bg-red-500/15 text-red-400 rounded-2xl flex items-center justify-center mb-6">
-              <MapPin className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3">Ubicación</h4>
-            <p className="text-gray-500 mb-2">Centro Poblado Pampas de Flores</p>
-            <p className="text-gray-200 font-semibold">Grass Sintético del C.P.</p>
-          </div>
-
-          <div className="bg-white/5 rounded-3xl p-8 border border-white/10 hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/5 transition-all duration-300">
-            <div className="w-14 h-14 bg-green-500/15 text-green-400 rounded-2xl flex items-center justify-center mb-6">
-              <Target className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3">Propósito</h4>
-            <p className="text-gray-500">
-              Fortalecer la integración deportiva y recaudar fondos a favor de la I.E.I. N° 090.
-            </p>
-          </div>
+        <div style={cardStyle}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(34,197,94,0.3)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(34,197,94,0.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = 'none'; }}>
+          <Target size={28} color="#22c55e" style={{ margin: '0 auto 12px' }} />
+          <h4 style={{ fontSize: 16, fontWeight: 800, margin: '0 0 4px' }}>Propósito</h4>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>Fortalecer la integración deportiva y recaudar fondos a favor de la I.E.I. N° 090.</p>
         </div>
       </div>
     </section>

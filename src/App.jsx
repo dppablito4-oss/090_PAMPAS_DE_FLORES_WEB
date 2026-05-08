@@ -11,14 +11,13 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="font-sans text-gray-200 bg-[#0a0f1a] antialiased">
+    <div style={{ minHeight: '100vh', background: '#06060d', fontFamily: "Inter, 'Segoe UI', sans-serif", color: '#fff' }}>
       <Navbar />
       <Hero onOpenInscription={() => setIsModalOpen(true)} />
       <Details />
       <Prizes />
       <Gastronomy />
       <Footer onOpenInscription={() => setIsModalOpen(true)} />
-      
       <InscriptionModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 

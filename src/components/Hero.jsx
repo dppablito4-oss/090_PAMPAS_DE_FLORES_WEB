@@ -7,88 +7,96 @@ export default function Hero({ onOpenInscription }) {
 
   useEffect(() => {
     const targetDate = new Date("May 17, 2026 09:00:00").getTime();
-
     const countdown = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
-
-      if (distance < 0) {
-        clearInterval(countdown);
-        setTimeLeft({ days: '00', hours: '00', minutes: '00' });
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
+      if (distance < 0) { clearInterval(countdown); return; }
       setTimeLeft({
-        days: days.toString().padStart(2, '0'),
-        hours: hours.toString().padStart(2, '0'),
-        minutes: minutes.toString().padStart(2, '0')
+        days: Math.floor(distance / (1000*60*60*24)).toString().padStart(2,'0'),
+        hours: Math.floor((distance % (1000*60*60*24)) / (1000*60*60)).toString().padStart(2,'0'),
+        minutes: Math.floor((distance % (1000*60*60)) / (1000*60)).toString().padStart(2,'0')
       });
     }, 1000);
-
     return () => clearInterval(countdown);
   }, []);
 
   return (
-    <section id="inicio" className="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative min-h-screen flex items-center">
-      {/* Imagen de fondo con degradado oscuro de izquierda a derecha */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${portadaImg})` }}
-      ></div>
-      {/* Gradiente oscuro de izquierda (opaco) a derecha (semi-transparente) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1a] via-[#0a0f1a]/85 to-[#0a0f1a]/40"></div>
-      {/* Gradiente extra abajo para fusionar con la siguiente sección */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1a] via-transparent to-transparent"></div>
+    <section id="inicio" style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+      {/* Background image */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `url(${portadaImg})`,
+        backgroundSize: 'cover', backgroundPosition: 'center',
+      }} />
+      {/* Gradient overlay: left opaque → right semi-transparent */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to right, rgba(6,6,13,0.97) 0%, rgba(6,6,13,0.8) 40%, rgba(6,6,13,0.35) 100%)',
+      }} />
+      {/* Bottom fade */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, #06060d 0%, transparent 40%)',
+      }} />
 
-      {/* Glow decorativos */}
-      <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-blue-600/10 blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-80 h-80 rounded-full bg-red-600/10 blur-3xl"></div>
+      <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '80px 24px 48px', width: '100%' }} className="fade-in">
+        {/* Badge */}
+        <div style={{
+          display: 'inline-block', padding: '4px 14px',
+          background: 'rgba(0,240,255,0.08)', border: '1px solid rgba(0,240,255,0.2)',
+          borderRadius: 20, fontSize: 11, color: '#00f0ff',
+          fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16
+        }}>⚽ I Campeonato Profondos</div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full fade-in">
-        <span className="inline-block py-1.5 px-4 rounded-full bg-blue-500/15 text-blue-400 text-sm font-semibold tracking-wide mb-6 border border-blue-500/20">
-          Gran Evento Profondos
-        </span>
-        <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
-          I Campeonato de Fulbito <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-            Varones y Mujeres
-          </span>
-        </h2>
-        <p className="mt-4 max-w-2xl text-lg text-gray-400 mx-auto mb-10">
+        {/* Title */}
+        <h1 style={{
+          margin: '0 0 14px', fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
+          fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1,
+          background: 'linear-gradient(135deg, #fff 0%, #a78bfa 50%, #00f0ff 100%)',
+          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+        }}>Campeonato de Fulbito<br/>Varones y Mujeres</h1>
+
+        <p style={{
+          margin: '0 auto 28px', maxWidth: 460, fontSize: 16,
+          color: 'rgba(255,255,255,0.5)', lineHeight: 1.65,
+        }}>
           Únete a nosotros para fortalecer la integración deportiva y los lazos de fraternidad, en favor de la I.E. Inicial N° 090 - Pampas de Flores.
         </p>
-        
-        {/* Contador Regresivo */}
-        <div className="flex justify-center gap-4 mb-12">
-          <div className="bg-white/5 backdrop-blur-md shadow-lg rounded-2xl p-4 w-24 border border-white/10">
-            <span className="block text-3xl font-bold text-blue-400">{timeLeft.days}</span>
-            <span className="text-xs text-gray-500 uppercase font-semibold">Días</span>
-          </div>
-          <div className="bg-white/5 backdrop-blur-md shadow-lg rounded-2xl p-4 w-24 border border-white/10">
-            <span className="block text-3xl font-bold text-blue-400">{timeLeft.hours}</span>
-            <span className="text-xs text-gray-500 uppercase font-semibold">Horas</span>
-          </div>
-          <div className="bg-white/5 backdrop-blur-md shadow-lg rounded-2xl p-4 w-24 border border-white/10">
-            <span className="block text-3xl font-bold text-blue-400">{timeLeft.minutes}</span>
-            <span className="text-xs text-gray-500 uppercase font-semibold">Min</span>
-          </div>
+
+        {/* Buttons */}
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 48 }}>
+          <a href="#premios" style={{
+            padding: '14px 28px', background: 'linear-gradient(135deg, #00f0ff, #7c3aed)',
+            border: 'none', borderRadius: 12, color: '#000', fontWeight: 800, fontSize: 15,
+            cursor: 'pointer', letterSpacing: '0.02em', textDecoration: 'none',
+            boxShadow: '0 0 28px rgba(0,240,255,0.25)', display: 'inline-flex', alignItems: 'center', gap: 8
+          }}>
+            Ver Premios <ArrowRight size={16} />
+          </a>
+          <button onClick={onOpenInscription} style={{
+            padding: '14px 28px', background: 'transparent',
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 12,
+            color: 'rgba(255,255,255,0.7)', fontWeight: 600, fontSize: 15,
+            cursor: 'pointer', fontFamily: 'inherit',
+          }}>Inscribir Equipo</button>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <a href="#premios" className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-primary hover:bg-blue-700 rounded-full shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all duration-300 gap-2">
-            Ver Premios
-            <ArrowRight className="w-5 h-5" />
-          </a>
-          <button 
-            onClick={onOpenInscription}
-            className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 rounded-full border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 gap-2"
-          >
-            Inscribir Equipo
-          </button>
+        {/* Countdown */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, justifyContent: 'center', maxWidth: 320, margin: '0 auto' }}>
+          {[
+            { val: timeLeft.days, label: 'Días' },
+            { val: timeLeft.hours, label: 'Horas' },
+            { val: timeLeft.minutes, label: 'Min' }
+          ].map(item => (
+            <div key={item.label} style={{
+              textAlign: 'center', padding: 8,
+              background: 'rgba(255,255,255,0.02)', borderRadius: 12,
+              border: '1px solid rgba(255,255,255,0.04)',
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#00f0ff' }}>{item.val}</div>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{item.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

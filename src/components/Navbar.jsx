@@ -6,56 +6,65 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 glass-nav ${scrolled ? 'shadow-lg shadow-black/20' : ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md shadow-primary/30">
-              090
-            </div>
-            <div>
-              <h1 className="font-bold text-lg text-blue-400 leading-tight">I.E.I. N° 090</h1>
-              <p className="text-xs text-gray-500 font-medium">PAMPAS DE FLORES</p>
-            </div>
-          </div>
-          
-          <div className="hidden md:flex space-x-8">
-            <a href="#inicio" className="text-gray-400 hover:text-blue-400 font-medium transition">Inicio</a>
-            <a href="#detalles" className="text-gray-400 hover:text-blue-400 font-medium transition">Detalles</a>
-            <a href="#premios" className="text-gray-400 hover:text-blue-400 font-medium transition">Premios</a>
-            <a href="#gastronomia" className="text-gray-400 hover:text-blue-400 font-medium transition">Gastronomía</a>
-          </div>
+  const navStyle = {
+    position: 'sticky', top: 0, zIndex: 50,
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    background: 'rgba(6,6,13,0.92)',
+    backdropFilter: 'blur(20px)',
+    padding: '0 32px',
+  };
 
-          <div className="md:hidden">
-            <button 
-              onClick={() => setIsOpen(!isOpen)} 
-              className="text-gray-400 hover:text-blue-400 focus:outline-none"
-            >
-              {isOpen ? <X /> : <Menu />}
-            </button>
-          </div>
+  const linkStyle = {
+    fontSize: '13px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none', padding: '6px 10px',
+    transition: 'color 0.2s', fontWeight: 500,
+  };
+
+  return (
+    <header style={navStyle}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', height: 62, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: 8, background: 'linear-gradient(135deg, #1e3a8a, #1d4ed8)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#fff', fontWeight: 800, fontSize: 11,
+            boxShadow: '0 0 12px rgba(0,240,255,0.2)'
+          }}>090</div>
+          <span style={{
+            fontWeight: 800, fontSize: 15, letterSpacing: '-0.02em',
+            background: 'linear-gradient(90deg, #00f0ff, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
+          }}>I.E.I. N° 090</span>
         </div>
+
+        <nav className="hidden md:flex" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {['Inicio', 'Detalles', 'Premios', 'Gastronomía'].map(item => (
+            <a key={item} href={`#${item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} style={linkStyle}
+              onMouseEnter={e => e.target.style.color = 'rgba(255,255,255,0.8)'}
+              onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.4)'}
+            >{item}</a>
+          ))}
+        </nav>
+
+        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}
+          style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
 
-      {/* Menú Móvil */}
       {isOpen && (
-        <div className="md:hidden bg-[#0f1629] border-t border-white/5">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#inicio" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-blue-400 hover:bg-white/5 rounded-md">Inicio</a>
-            <a href="#detalles" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-blue-400 hover:bg-white/5 rounded-md">Detalles</a>
-            <a href="#premios" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-blue-400 hover:bg-white/5 rounded-md">Premios</a>
-            <a href="#gastronomia" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-blue-400 hover:bg-white/5 rounded-md">Gastronomía</a>
-          </div>
+        <div className="md:hidden" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '8px 0' }}>
+          {['Inicio', 'Detalles', 'Premios', 'Gastronomía'].map(item => (
+            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)}
+              style={{ display: 'block', padding: '10px 16px', color: 'rgba(255,255,255,0.5)', textDecoration: 'none', fontSize: 14 }}>
+              {item}
+            </a>
+          ))}
         </div>
       )}
-    </nav>
+    </header>
   );
 }

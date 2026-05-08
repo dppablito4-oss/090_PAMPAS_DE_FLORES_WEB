@@ -2,127 +2,81 @@ import { useState } from 'react';
 import { Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const prizeItem = (pos, label, prize, color) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 0' }}>
+    <div style={{
+      width: 44, height: 44, borderRadius: '50%', background: `${color}15`,
+      display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+    }}>
+      <span style={{ fontSize: 16, fontWeight: 900, color }}>{pos}</span>
+    </div>
+    <div>
+      <p style={{ margin: 0, fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</p>
+      <p style={{ margin: 0, fontSize: 16, fontWeight: 800 }}>{prize}</p>
+    </div>
+  </div>
+);
+
 export default function Prizes() {
   const [activeTab, setActiveTab] = useState('varones');
 
+  const tabBtn = (id, label) => (
+    <button onClick={() => setActiveTab(id)} style={{
+      padding: '8px 20px', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700,
+      cursor: 'pointer', fontFamily: 'inherit', transition: '0.2s',
+      background: activeTab === id ? 'linear-gradient(135deg, rgba(0,240,255,0.85), rgba(124,58,237,0.85))' : 'transparent',
+      color: activeTab === id ? '#000' : 'rgba(255,255,255,0.4)',
+    }}>{label}</button>
+  );
+
   return (
-    <section id="premios" className="py-24 bg-[#0d1322]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-white mb-4">Categorías y Premios</h3>
-          <p className="text-gray-500">Selecciona la categoría para ver los costos de inscripción y los grandes premios a disputarse.</p>
-        </div>
-
-        <div className="flex justify-center mb-10">
-          <div className="bg-white/5 p-1 rounded-full border border-white/10 inline-flex relative">
-            <button 
-              onClick={() => setActiveTab('varones')} 
-              className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === 'varones' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
-            >
-              Fulbito Varones
-            </button>
-            <button 
-              onClick={() => setActiveTab('mujeres')} 
-              className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === 'mujeres' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
-            >
-              Fulbito Mujeres
-            </button>
-            
-            {/* Animated Tab Background */}
-            <div className={`absolute top-1 bottom-1 w-1/2 rounded-full transition-all duration-300 ${activeTab === 'varones' ? 'left-1 bg-primary shadow-lg shadow-primary/30' : 'left-1/2 bg-secondary shadow-lg shadow-secondary/30 -ml-1 w-[calc(50%+2px)]'}`}></div>
-          </div>
-        </div>
-
-        <div className="relative min-h-[300px]">
-          <AnimatePresence mode="wait">
-            {activeTab === 'varones' && (
-              <motion.div 
-                key="varones"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white/5 rounded-3xl shadow-xl overflow-hidden border border-white/10 absolute w-full"
-              >
-                <div className="bg-primary px-8 py-6 text-white flex justify-between items-center">
-                  <h4 className="text-2xl font-bold flex items-center gap-3">
-                    <Users /> Categoría Varones
-                  </h4>
-                  <div className="text-right">
-                    <p className="text-blue-300/70 text-sm">Inscripción por equipo</p>
-                    <p className="text-2xl font-bold">S/ 150.00</p>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <ul className="space-y-6">
-                    <li className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition">
-                      <div className="w-16 h-16 rounded-full bg-yellow-500/15 flex items-center justify-center flex-shrink-0 border-4 border-[#0d1322] shadow-sm">
-                        <span className="text-2xl font-black text-yellow-400">1°</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500 font-semibold uppercase tracking-wider">Primer Puesto</p>
-                        <p className="text-2xl font-bold text-white">Un Chancho</p>
-                      </div>
-                    </li>
-                    <li className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition">
-                      <div className="w-16 h-16 rounded-full bg-gray-500/15 flex items-center justify-center flex-shrink-0 border-4 border-[#0d1322] shadow-sm">
-                        <span className="text-2xl font-black text-gray-400">2°</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500 font-semibold uppercase tracking-wider">Segundo Puesto</p>
-                        <p className="text-2xl font-bold text-white">Una Oveja Soltera</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </motion.div>
-            )}
-
-            {activeTab === 'mujeres' && (
-              <motion.div 
-                key="mujeres"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white/5 rounded-3xl shadow-xl overflow-hidden border border-white/10 absolute w-full"
-              >
-                <div className="bg-secondary px-8 py-6 text-white flex justify-between items-center">
-                  <h4 className="text-2xl font-bold flex items-center gap-3">
-                    <Users /> Categoría Mujeres
-                  </h4>
-                  <div className="text-right">
-                    <p className="text-red-300/70 text-sm">Inscripción por equipo</p>
-                    <p className="text-2xl font-bold">S/ 80.00</p>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <ul className="space-y-6">
-                    <li className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition">
-                      <div className="w-16 h-16 rounded-full bg-yellow-500/15 flex items-center justify-center flex-shrink-0 border-4 border-[#0d1322] shadow-sm">
-                        <span className="text-2xl font-black text-yellow-400">1°</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500 font-semibold uppercase tracking-wider">Primer Puesto</p>
-                        <p className="text-2xl font-bold text-white">Una Oveja</p>
-                      </div>
-                    </li>
-                    <li className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition">
-                      <div className="w-16 h-16 rounded-full bg-gray-500/15 flex items-center justify-center flex-shrink-0 border-4 border-[#0d1322] shadow-sm">
-                        <span className="text-2xl font-black text-gray-400">2°</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500 font-semibold uppercase tracking-wider">Segundo Puesto</p>
-                        <p className="text-2xl font-bold text-white">Un Gallo Madrugador</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+    <section id="premios" style={{ maxWidth: 700, margin: '0 auto', padding: '0 24px 80px' }}>
+      <div style={{ marginBottom: 32 }}>
+        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em' }}>🏆 Categorías y Premios</h2>
+        <p style={{ margin: '3px 0 0', fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>Selecciona la categoría para ver premios e inscripción.</p>
       </div>
+
+      <div style={{ display: 'flex', gap: 4, marginBottom: 24, background: 'rgba(255,255,255,0.03)', borderRadius: 12, padding: 4, border: '1px solid rgba(255,255,255,0.06)', width: 'fit-content' }}>
+        {tabBtn('varones', 'Varones')}
+        {tabBtn('mujeres', 'Mujeres')}
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div key={activeTab}
+          initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.25 }}
+          style={{ background: 'rgba(13,13,24,0.8)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}
+        >
+          <div style={{
+            padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+          }}>
+            <h4 style={{ margin: 0, fontSize: 15, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Users size={18} color="#00f0ff" />
+              {activeTab === 'varones' ? 'Categoría Varones' : 'Categoría Mujeres'}
+            </h4>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ margin: 0, fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Inscripción</p>
+              <p style={{ margin: 0, fontSize: 18, fontWeight: 900, color: '#00f0ff' }}>
+                {activeTab === 'varones' ? 'S/ 150' : 'S/ 80'}
+              </p>
+            </div>
+          </div>
+          <div style={{ padding: '12px 24px 20px' }}>
+            {activeTab === 'varones' ? (
+              <>
+                {prizeItem('1°', 'Primer Puesto', 'Un Chancho', '#facc15')}
+                {prizeItem('2°', 'Segundo Puesto', 'Una Oveja Soltera', '#94a3b8')}
+              </>
+            ) : (
+              <>
+                {prizeItem('1°', 'Primer Puesto', 'Una Oveja', '#facc15')}
+                {prizeItem('2°', 'Segundo Puesto', 'Un Gallo Madrugador', '#94a3b8')}
+              </>
+            )}
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </section>
   );
 }
