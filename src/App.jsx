@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Details from './components/Details';
@@ -6,8 +7,9 @@ import Prizes from './components/Prizes';
 import Gastronomy from './components/Gastronomy';
 import Footer from './components/Footer';
 import InscriptionModal from './components/InscriptionModal';
+import AdminPanel from './components/AdminPanel';
 
-function App() {
+function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -18,11 +20,19 @@ function App() {
       <Prizes />
       <Gastronomy />
       <Footer onOpenInscription={() => setIsModalOpen(true)} />
-      <InscriptionModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
+      <InscriptionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
+      </Routes>
+    </HashRouter>
   );
 }
 
